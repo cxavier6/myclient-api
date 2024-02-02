@@ -1,0 +1,63 @@
+version: '3'
+
+networks:
+  backend:
+    driver: bridge
+  frontend:
+    driver: bridge
+
+services:
+  mysqldb:
+    image: mysql:8
+    container_name: myclient-database
+    hostname: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: unless-stopped
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/0_init.sql
+      - $HOME/database:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      SERVICE_TAGS: prod
+      SERVICE_NAME: mysqldb
+    networks:
+      - backend
+
+  nodeapi:
+    depends_on:
+      - mysqldb
+    container_name: myclient-api
+    build:
+      context: .
+      dockerfile: Dockerfile.node
+    image: myclientimage:v1
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      DB_CONNECTION_LIMIT: 20
+      SERVER_PORT: 3000
+      SERVICE_TAGS: prod
+      SERVICE_NAME: myclient-api
+    networks:
+      - backend
+
+  nginx:
+    depends_on:
+      - nodeapi
+    build: 
+      context: .
+      dockerfile: Dockerfile.nginx
+    container_name: myclient-nginx
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "80:80"
+    networks:
+      - backend
+      - frontend

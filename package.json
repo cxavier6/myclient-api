@@ -1,0 +1,23 @@
+{
+  "name": "myclient-api",
+  "version": "1.0.0",
+  "description": "nodejs api with express, mysql db, nginx and docker-compose",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start:dev": "NODE_ENV=dev nodemon src/server.js",
+    "start:prod": "NODE_ENV=prod node src/server.js"
+  },
+  "author": "camila",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.1",
+    "express": "^4.18.2",
+    "ip": "^1.1.8",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3"
+  }
+}
