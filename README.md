@@ -45,19 +45,6 @@ SHOW tables;
 SELECT * FROM clients LIMIT 100;
 ```
 
-## Troubleshooting
-
-If you're having trouble to run the application you can check the logs to see what's happening:
-```
-docker-compose logs
-```
-The output is going to give you logs for the 3 containers created in this application.
-
-To check the logs of a specific container:
-```
-docker logs <container-name>
-```
-
 ## API Routes
 
 #### Get all clients
@@ -117,5 +104,19 @@ For the `PUT` method you need to insert all the parameters needed to create a cl
 | `id`      | `string` | **Required**. The ID of the client you want to delete. |
 
 #### Example output for a GET request at the route `/clients/:id`. 
+![image](https://github.com/cxavier6/myclient-api/assets/79461028/219c2447-ddaa-419c-9cb6-7c2c7c30c7b0)
 
+
+## Troubleshooting
+
+If you're having trouble to run the application you can check the logs to see what's happening:
+```
+docker-compose logs
+```
+The output is going to give you logs for the 3 containers created in this application.
+
+To check the logs of a specific container:
+```
+docker logs <container-name>
+```
 
