@@ -53,6 +53,10 @@ docker-compose logs
 ```
 The output is going to give you logs for the 3 containers created in this application.
 
+To check the logs of a specific container:
+```
+docker logs <container-name>
+```
 
 ## API Routes
 
